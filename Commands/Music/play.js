@@ -7,14 +7,14 @@ module.exports.run = async (client, message, args, Discord) => {
     let Value = args.join(" "),
         Channel = message.member.voice.channel,
         Queue = await client.queue.get(message.guild.id);
-    if (!Channel) return message.channel.send("Error: No Voice Channel!");
-    if (!Channel.joinable || !Channel.speakable) return message.channel.send("Error: Voice Channel Not Joinable Or Speakable!");
+    if (!Channel) return message.channel.send("You need to join a voice channel!");
+    if (!Channel.joinable || !Channel.speakable) return message.channel.send("No permissions to join or play music in that channel. Please dm <@774886672415326238> if the issue keeps persisting");
     if (!Value) return client.commands.get("help").run(client, message, ["play", client.token], Discord);
 
     let Music = await GetInfo(Value, message),
         Song, Songs, Connection, T = {};
 
-    if (!Music) return message.channel.send("Error: No Song Found!");
+    if (!Music) return message.channel.send("Could not find any song with that name! try again.");
     if (Music.P) {
         Songs = Music.Videos;
         Song = Music.Videos[0];
@@ -40,7 +40,7 @@ module.exports.run = async (client, message, args, Discord) => {
         await Connection.voice.setSelfDeaf(true);
     } catch (e) {
         console.log(e);
-        return message.channel.send("Error: Unable To Join Voice Channel!");
+        return message.channel.send("Unable To Join Voice Channel! Please DM <@774886672415326238> if the issue keeps persisting!");
     };
 
     await client.queue.set(message.guild.id, {
@@ -64,7 +64,7 @@ module.exports.run = async (client, message, args, Discord) => {
         });
     } catch (e) {
         await Channel.leave(), await client.queue.delete(message.guild.id), await console.log(e);
-        return message.channel.send("Error: Something Went Wrong, Try Again Later!");
+        return message.channel.send("Something Went Wrong, Try Again Later! if the issue keeps persisting please DM <@774886672415326238>");
     };
 };
 
