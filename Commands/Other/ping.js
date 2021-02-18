@@ -4,7 +4,7 @@ module.exports.run = (client, message) => {
 
 module.exports.help = {
     name: "ping",
-    aliases: ["p"],
+    aliases: [],
     cooldown: 7000,
     category: "Other",
     description: "Get Bot Ping!",
